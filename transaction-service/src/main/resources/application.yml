@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: transaction-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+
+server:
+  port: 8083
