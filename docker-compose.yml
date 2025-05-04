@@ -1,0 +1,138 @@
+services:
+  eureka-server:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+    networks:
+      - app-network
+
+  user-db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: my_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+      - user-db
+    environment:
+      SPRING_DATASOURCE_URL:  jdbc:postgresql://user-db:5432/my_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - app-network
+
+  account-db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: my_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - account-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  account-service:
+    build: ./account-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+      - account-db
+    environment:
+      SPRING_DATASOURCE_URL:  jdbc:postgresql://account-db:5432/my_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - app-network
+
+  transaction-db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: my_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5435:5432"
+    volumes:
+      - transaction-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  transaction-service:
+    build: ./transaction-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka-server
+      - transaction-db
+    environment:
+      SPRING_DATASOURCE_URL:  jdbc:postgresql://transaction-db:5432/my_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - app-network
+
+  analytics-db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: my_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5436:5432"
+    volumes:
+      - analytics-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  analytics-service:
+    build: ./analytics-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+      - analytics-db
+    environment:
+      SPRING_DATASOURCE_URL:  jdbc:postgresql://analytics-db:5432/my_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  user-db-data:
+  account-db-data:
+  transaction-db-data:
+  analytics-db-data:

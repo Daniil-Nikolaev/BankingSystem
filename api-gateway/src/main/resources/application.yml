@@ -1,11 +1,6 @@
 spring:
   application:
     name: api-gateway
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka
   cloud:
     gateway:
       discovery:
@@ -17,21 +12,23 @@ eureka:
           uri: lb://user-service
           predicates:
             - Path=/users/**
-
         - id: account-service
           uri: lb://account-service
           predicates:
             - Path=/accounts/**
-
         - id: transaction-service
           uri: lb://transaction-service
           predicates:
             - Path=/transactions/**
-
         - id: analytics-service
           uri: lb://analytics-service
           predicates:
             - Path=/analytics/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
 
 server:
   port: 8080
