@@ -61,4 +61,10 @@ public class AccountController {
        accountService.deleteAccount(accountId);
        return new ResponseEntity<>(HttpStatus.OK);
    }
+
+   // пример как вытаскивать из jwt-токена userId
+    @GetMapping("/test")
+    public ResponseEntity<String> test(@RequestHeader("X-User-Id") UUID userId) {
+        return ResponseEntity.ok("User ID from JWT: " + userId);
+    }
 }

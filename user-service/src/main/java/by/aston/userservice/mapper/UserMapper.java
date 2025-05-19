@@ -10,5 +10,12 @@ public interface UserMapper {
 
     UserDto convertToDto(User user);
 
-    User convertToEntity(UserDto userDto);
+    //User convertToEntity(UserDto userDto);
+    default User convertToEntity(UserDto dto) {
+        User user = new User();
+        user.setUsername(dto.username());
+        user.setPassword(dto.password());
+        user.setEmail(dto.email());
+        return user;
+    }
 }

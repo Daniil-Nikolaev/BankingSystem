@@ -8,7 +8,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -24,3 +24,7 @@ eureka:
 
 server:
   port: 8084
+
+jwt:
+  secret: "this_is_a_super_secure_jwt_key_123456"
+  expiration: 3600000
