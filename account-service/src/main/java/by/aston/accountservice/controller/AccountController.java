@@ -27,7 +27,6 @@ public class AccountController {
 
    @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody @Valid AccountDto accountDto, BindingResult bindingResult) {
-        //Реализовать REST запрос на проверку существования пользователя
        if (bindingResult.hasErrors()) {
            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
        }
@@ -35,8 +34,8 @@ public class AccountController {
        return new ResponseEntity<>(HttpStatus.CREATED);
    }
 
-   @GetMapping("/{userId}")
-    public ResponseEntity<List<AccountDto>> getAccounts(@PathVariable UUID userId) {
+   @GetMapping()
+    public ResponseEntity<List<AccountDto>> getAccounts(@RequestHeader("X-User-Id") UUID userId) {
         if (userId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -61,10 +60,4 @@ public class AccountController {
        accountService.deleteAccount(accountId);
        return new ResponseEntity<>(HttpStatus.OK);
    }
-
-   // пример как вытаскивать из jwt-токена userId
-    @GetMapping("/test")
-    public ResponseEntity<String> test(@RequestHeader("X-User-Id") UUID userId) {
-        return ResponseEntity.ok("User ID from JWT: " + userId);
-    }
 }
