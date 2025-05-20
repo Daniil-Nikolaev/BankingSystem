@@ -25,6 +25,7 @@ public class AccountService {
 
     public void createAccount(AccountDto accountDto) {
         Account account=accountMapper.convertToEntity(accountDto);
+        account.setId(UUID.randomUUID());
         accountRepository.save(account);
     }
 
