@@ -70,6 +70,7 @@ services:
       SPRING_DATASOURCE_URL:  jdbc:postgresql://user-db:5432/my_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     networks:
       - app-network
 

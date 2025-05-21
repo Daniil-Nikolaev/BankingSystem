@@ -17,6 +17,15 @@ spring:
       enabled: true
       locations: classpath:db/migration
       baseline-on-migrate: true
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: account-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
 eureka:
   client:
     service-url:
