@@ -1,5 +1,5 @@
 package by.aston.analyticsservice.entity;
 
 public enum Type {
-    INCOMING,OUTGOING,UNKNOWN;
+    INCOMING,OUTGOING,UNKNOWN, INCOME, EXPENSE;
 }

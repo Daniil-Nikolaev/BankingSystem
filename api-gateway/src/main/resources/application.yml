@@ -25,6 +25,10 @@ spring:
           predicates:
             - Path=/analytics/**
 
+jwt:
+  secret: "this_is_a_super_secure_jwt_key_123456"
+  expiration: 3600000
+
 eureka:
   client:
     service-url:
