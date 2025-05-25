@@ -21,3 +21,4 @@ public record TransactionDto(
 
         String description
 ) {}
+

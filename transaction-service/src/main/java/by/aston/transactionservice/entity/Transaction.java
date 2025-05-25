@@ -1,3 +1,4 @@
+
 package by.aston.transactionservice.entity;
 
 import jakarta.persistence.*;
@@ -49,3 +50,4 @@ public class Transaction {
         this.date = LocalDateTime.now();
     }
 }
+

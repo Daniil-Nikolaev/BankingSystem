@@ -153,10 +153,23 @@ services:
     depends_on:
       - eureka-server
       - analytics-db
+      - kafka
     environment:
       SPRING_DATASOURCE_URL:  jdbc:postgresql://analytics-db:5432/my_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - app-network
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - "8089:8080"
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+    depends_on:
+      - kafka
     networks:
       - app-network
 

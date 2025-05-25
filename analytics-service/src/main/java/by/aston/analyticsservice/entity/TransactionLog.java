@@ -1,28 +1,34 @@
 package by.aston.analyticsservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Data
-@Table(name = "transactions_log")
+@Table(name = "transaction_logs")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TransactionLog {
+
     @Id
-    @Column(columnDefinition = "uuid DEFAULT gen_random_uuid()")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(nullable = false)
     private UUID accountId;
     @Column(nullable = false)
-    private LocalDateTime date;
+    private UUID userId;
     @Column(nullable = false)
     private BigDecimal amount;
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
-
+    private LocalDateTime createdAt;
+    @PrePersist
+    void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 }
