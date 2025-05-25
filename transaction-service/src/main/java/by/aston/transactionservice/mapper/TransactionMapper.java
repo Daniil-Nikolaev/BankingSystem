@@ -1,3 +1,4 @@
+
 package by.aston.transactionservice.mapper;
 
 import by.aston.transactionservice.dto.TransactionDto;
@@ -22,3 +23,4 @@ public interface TransactionMapper {
     @Mapping(target = "description",       source = "description")
     TransactionDto toDto(Transaction entity);
 }
+
